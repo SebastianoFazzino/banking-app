@@ -27,4 +27,5 @@ target/
 /.nb-gradle/
 build/
 !**/src/main/**/build/
-/backend/target/
+/banking-app-backend/target/
+/banking-app-frontend/.vscode/
