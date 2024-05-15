@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+
+  profiles:
+    active: "dev"
+
+  datasource:
+    url: jdbc:h2:mem:banking
+    driverClassName: org.h2.Driver
+    username: user
+    password: password
+  h2:
+    console:
+      enabled: true
+  jpa:
+    open-in-view: false
+    defer-datasource-initialization: true
+
+app:
+  banking:
+    maximum-loan-term: 60 #months
+    maximum-loan-amount: 10000.0
+    minimum-loan-amount: 2000.0
+    credit-score-threshold: 1.0
