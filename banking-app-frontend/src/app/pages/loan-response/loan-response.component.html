@@ -1,0 +1,36 @@
+<div *ngIf="loanResponse" class="container-fluid card container-card px-5">
+
+  <h2 class="text-center text-dark-emphasis my-5 fw-bolder">
+    Loan Request Status
+  </h2>
+
+  <div class="p-3">
+    <div class="alert" [ngClass]="{'alert-success': loanResponse.status === 'APPROVED', 'alert-danger': loanResponse.status === 'REJECTED'}" role="alert">
+      <strong>Status:</strong> {{loanResponse.status}}
+      <i class="bi position-absolute top-50 end-0 translate-middle-y pe-3" [ngClass]="{'bi-check-circle': loanResponse.status === 'APPROVED', 'bi-x-circle': loanResponse.status === 'REJECTED'}"></i>
+    </div>
+
+    <div class="form-floating my-3 position-relative">
+      <input class="form-control" id="requested-amount" placeholder="" type="text" [(ngModel)]="loanResponse.requestedAmount" readonly disabled>
+      <label for="requested-amount">Requested Amount</label>
+      <i class="bi bi-currency-euro position-absolute top-50 end-0 translate-middle-y pe-3"></i>
+    </div>
+
+    <div class="form-floating my-3 position-relative" *ngIf="loanResponse?.allowedAmount">
+      <input class="form-control" id="allowed-amount" placeholder="" type="text" [(ngModel)]="loanResponse.allowedAmount" readonly disabled>
+      <label for="allowed-amount">Allowed Amount</label>
+      <i class="bi bi-currency-euro position-absolute top-50 end-0 translate-middle-y pe-3"></i>
+    </div>
+
+    <div class="form-floating my-3 position-relative" *ngIf="loanResponse?.loanTerm">
+      <input class="form-control" id="loan-term" placeholder="" type="text" [(ngModel)]="loanResponse.loanTerm" readonly disabled>
+      <label for="loan-term">Duration (months)</label>
+      <i class="bi bi-hourglass position-absolute top-50 end-0 translate-middle-y pe-3"></i>
+    </div>
+
+    <button (click)="submitNewRequest()" class="btn btn-outline-success w-100 my-4" type="button">
+      <i class="bi bi-arrow-repeat me-2"></i>Submit New Request
+    </button>
+
+  </div>
+</div>

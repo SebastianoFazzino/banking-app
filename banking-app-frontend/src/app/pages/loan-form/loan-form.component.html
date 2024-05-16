@@ -1,0 +1,56 @@
+<div class="container-fluid card container-card px-5">
+  <h2 class="text-center text-dark-emphasis my-5 fw-bolder">
+    Submit loan request
+  </h2>
+  <div class="p-3">
+
+    <!-- error messages -->
+    <div *ngIf="errorMessages.length">
+      <div *ngFor="let msg of errorMessages">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>{{ msg }}</strong>
+          <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- form items -->
+    <div class="form-floating my-3 position-relative">
+      <input (ngModelChange)="clearErrors()" [(ngModel)]="loanRequest.personalCode" class="form-control"
+             id="personal-code"
+             placeholder="0123456789" type="text">
+      <label for="personal-code">Personal Code</label>
+      <i class="bi bi-bank2 position-absolute top-50 end-0 translate-middle-y pe-3"></i>
+    </div>
+
+    <div class="form-floating my-3 position-relative">
+      <input (focus)="isAmountFocused = true" (blur)="isAmountFocused = false" (ngModelChange)="clearErrors()" [(ngModel)]="loanRequest.requestedAmount" class="form-control"
+             id="requested-amount"
+             placeholder="" type="text">
+      <label for="requested-amount" *ngIf="isAmountFocused">Requested Amount<small>&nbsp;(2000-10000)</small></label>
+      <label for="requested-amount" *ngIf="!isAmountFocused">Enter amount requested</label>
+      <i class="bi bi-currency-euro position-absolute top-50 end-0 translate-middle-y pe-3"></i>
+    </div>
+
+    <div class="form-floating my-3 position-relative">
+      <input (focus)="isDurationFocused = true" (blur)="isDurationFocused = false" (ngModelChange)="clearErrors()" [(ngModel)]="loanRequest.durationInMonths" class="form-control"
+             id="duration"
+             placeholder="" type="text">
+      <label for="duration" *ngIf="isDurationFocused">Duration<small>&nbsp;(12-60)</small></label>
+      <label for="duration" *ngIf="!isDurationFocused">Enter duration in months</label>
+      <i class="bi bi-hourglass position-absolute top-50 end-0 translate-middle-y pe-3"></i>
+    </div>
+
+    <!-- submit button -->
+    <button (click)="submitRequest()" class="btn btn-outline-success w-100 my-4" type="button" [disabled]="isRequestExecuting">
+      <span *ngIf="!isRequestExecuting || errorMessages.length">
+       <i class="bi bi-arrow-right me-2"></i>Submit Request
+      </span>
+      <span *ngIf="isRequestExecuting && !errorMessages.length">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Submitting...
+      </span>
+    </button>
+
+  </div>
+</div>
