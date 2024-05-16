@@ -2,7 +2,7 @@ package com.banking.app.services;
 
 import com.banking.app.configurations.BankingConfiguration;
 import com.banking.app.models.Client;
-import com.banking.app.models.DecisionEngineResponse;
+import com.banking.app.models.LoanResponse;
 import com.banking.app.models.LoanRequest;
 import com.banking.app.models.enums.ClientSegmentation;
 import com.banking.app.models.enums.DecisionEngineStatus;
@@ -22,14 +22,15 @@ public class DecisionEngineService {
 
     private final BankingConfiguration bankingConfiguration;
 
-    public DecisionEngineResponse processLoanRequest(LoanRequest request) {
+    public LoanResponse processLoanRequest(LoanRequest request) {
 
         log.info("Processing loan request: {}", request);
 
         Client client = clientService.getClientByPersonalCode(request.getPersonalCode());
 
-        DecisionEngineResponse response = new DecisionEngineResponse();
+        LoanResponse response = new LoanResponse();
         response.setRequestedAmount(request.getRequestedAmount());
+        response.setRequestedLoanTerm(request.getDurationInMonths());
 
         if (client.getSegmentation().equals(ClientSegmentation.DEBT)) {
             log.info("Client {} is in debt, loan request rejected", client.getPersonalCode());
@@ -54,7 +55,7 @@ public class DecisionEngineService {
 
         if ( creditScore >= creditScoreThreshold ) {
 
-            log.info("Client {} credit score: {}, credit score threshold: {}, credit score is good",
+            log.info("Client {} credit score: {}, credit score threshold: {}, credit score is good, approving loan request",
                     client.getPersonalCode(), creditScore, creditScoreThreshold);
             maximumAllowed = Math.min(requestedAmount * creditScore, maximumLoanAmount);
 
@@ -72,16 +73,20 @@ public class DecisionEngineService {
 
             maximumAllowed = this.formatAmount(requestedAmount);
 
+            log.info("Client {} credit score: {}, requested amount adjusted to: {}",
+                    client.getPersonalCode(), creditScore, maximumAllowed);
+
             // Adjust loan term until maximum allowed amount >= minimum loan amount
-            // or maximum loan term is reached
-            while (maximumAllowed < minimumLoanAmount && loanTerm < maximumLoanTerm) {
+            // or credit score >= credit score threshold
+            // up until maximum loan term is reached
+            while ((maximumAllowed < minimumLoanAmount || creditScore < creditScoreThreshold) && loanTerm < maximumLoanTerm) {
                 loanTerm++;
                 creditScore = creditModifier / requestedAmount * loanTerm;
-                maximumAllowed = creditModifier / creditScore * loanTerm;
+                maximumAllowed = creditScore * requestedAmount;
             }
 
             // If still not suitable after adjusting loan term
-            if (maximumAllowed < minimumLoanAmount) {
+            if (maximumAllowed < minimumLoanAmount || creditScore < creditScoreThreshold) {
                 log.info("Client {} credit score: {}, unable to find suitable loan term",
                         client.getPersonalCode(), creditScore);
                 response.rejectRequest();
@@ -93,7 +98,7 @@ public class DecisionEngineService {
 
         response.setAllowedAmount(Math.min(formattedMaximumAllowed, maximumLoanAmount));
         response.setStatus(DecisionEngineStatus.APPROVED);
-        response.setLoanTerm(loanTerm);
+        response.setAllowedLoanTerm(loanTerm);
         return response;
     }
 

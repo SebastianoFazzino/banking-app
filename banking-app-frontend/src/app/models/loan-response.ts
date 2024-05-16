@@ -1,6 +1,7 @@
 export interface LoanResponse {
   requestedAmount?: number;
   allowedAmount?: number;
-  loanTerm?: number;
+  requestedLoanTerm?: number;
+  allowedLoanTerm?: number;
   status?: 'APPROVED' | 'REJECTED';
 }

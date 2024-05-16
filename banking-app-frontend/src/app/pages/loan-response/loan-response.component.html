@@ -1,10 +1,25 @@
 <div *ngIf="loanResponse" class="container-fluid card container-card px-5">
-
-  <h2 class="text-center text-dark-emphasis my-5 fw-bolder">
-    Loan Request Status
-  </h2>
-
   <div class="p-3">
+
+    <h2 class="text-center text-dark-emphasis my-5 fw-bolder">
+      Loan Request Status
+    </h2>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{errorMessage}}
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="alert alert-success" role="alert">
+      {{successMessage}}
+    </div>
+
+    <!-- Warning Message -->
+    <div *ngIf="warningMessage" class="alert alert-warning" role="alert">
+      {{warningMessage}}
+    </div>
+
     <div class="alert" [ngClass]="{'alert-success': loanResponse.status === 'APPROVED', 'alert-danger': loanResponse.status === 'REJECTED'}" role="alert">
       <strong>Status:</strong> {{loanResponse.status}}
       <i class="bi position-absolute top-50 end-0 translate-middle-y pe-3" [ngClass]="{'bi-check-circle': loanResponse.status === 'APPROVED', 'bi-x-circle': loanResponse.status === 'REJECTED'}"></i>
@@ -18,12 +33,12 @@
 
     <div class="form-floating my-3 position-relative" *ngIf="loanResponse?.allowedAmount">
       <input class="form-control" id="allowed-amount" placeholder="" type="text" [(ngModel)]="loanResponse.allowedAmount" readonly disabled>
-      <label for="allowed-amount">Allowed Amount</label>
+      <label for="allowed-amount">Maximum Allowed Amount</label>
       <i class="bi bi-currency-euro position-absolute top-50 end-0 translate-middle-y pe-3"></i>
     </div>
 
-    <div class="form-floating my-3 position-relative" *ngIf="loanResponse?.loanTerm">
-      <input class="form-control" id="loan-term" placeholder="" type="text" [(ngModel)]="loanResponse.loanTerm" readonly disabled>
+    <div class="form-floating my-3 position-relative" *ngIf="loanResponse?.allowedLoanTerm">
+      <input class="form-control" id="loan-term" placeholder="" type="text" [(ngModel)]="loanResponse.allowedLoanTerm" readonly disabled>
       <label for="loan-term">Duration (months)</label>
       <i class="bi bi-hourglass position-absolute top-50 end-0 translate-middle-y pe-3"></i>
     </div>

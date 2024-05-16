@@ -8,13 +8,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DecisionEngineResponse {
+public class LoanResponse {
 
     private Double requestedAmount;
 
     private Double allowedAmount;
 
-    private Integer loanTerm;
+    private Integer requestedLoanTerm;
+
+    private Integer allowedLoanTerm;
 
     private DecisionEngineStatus status;
 

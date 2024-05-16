@@ -1,6 +1,6 @@
 package com.banking.app.controllers;
 
-import com.banking.app.models.DecisionEngineResponse;
+import com.banking.app.models.LoanResponse;
 import com.banking.app.models.LoanRequest;
 import com.banking.app.services.DecisionEngineService;
 import jakarta.validation.Valid;
@@ -18,7 +18,7 @@ public class BankingController {
     private final DecisionEngineService decisionEngineService;
 
     @PostMapping("/request-loan")
-    public DecisionEngineResponse requestLoan(
+    public LoanResponse requestLoan(
             @Valid @RequestBody LoanRequest request
     ) {
         return decisionEngineService.processLoanRequest(request);
