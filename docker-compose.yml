@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  backend:
+    image: banking-app-backend
+    container_name: banking-app-backend
+    build:
+      context: ./banking-app-backend
+    ports:
+      - "8080:8080"
+
+  frontend:
+    image: banking-app-frontend
+    container_name: banking-app-frontend
+    build:
+      context: ./banking-app-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
