@@ -20,7 +20,7 @@ public class ExceptionResponse {
 
     private HttpStatus httpStatus;
 
-    private String timestamp = new Date(System.currentTimeMillis()).toString();
+    private final String timestamp = new Date(System.currentTimeMillis()).toString();
 
     private String errorCode;
 
