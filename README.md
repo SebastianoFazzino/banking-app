@@ -106,15 +106,16 @@ To test the application, use the following personal codes on the frontend:
    ```
    mvn spring-boot:run
    ```
+   
    This command will compile the Spring Boot application and start a development server. 
    By default, the application will be accessible at [http://localhost:8080](http://localhost:8080).
 
-2. **Install Frontend Dependencies**:
+4. **Install Frontend Dependencies**:
    ```
    npm install
    ```
 
-3. **Run the Development Server**:
+5. **Run the Development Server**:
    ```
    ng serve
    ```
@@ -122,10 +123,10 @@ To test the application, use the following personal codes on the frontend:
    This command will compile the Angular application and start a development server. 
    By default, the application will be accessible at [http://localhost:4200](http://localhost:4200).
 
-4. **Access the Application**:
+6. **Access the Application**:
    Open your web browser and navigate to [http://localhost:4200](http://localhost:4200) to access the frontend application.
 
-5. **Testing**:
+7. **Testing**:
    Use predefined personal codes to simulate different scenarios and ensure that the decision engine behaves as expected.
 
 
