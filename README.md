@@ -85,8 +85,8 @@ INSERT INTO clients (personal_code, segmentation, credit_modifier) VALUES
 
 There are two ways to set up the development environment:
 
-1. **Development Setup #1: Run the backend and frontend separately
-2. **Development Setup #2: Run the backend and frontend using Docker and Docker Compose
+- Development Setup #1: Run the backend and frontend separately 
+- Development Setup #2: Run the backend and frontend using Docker and Docker Compose
 
 
 ### Development Setup 1
@@ -129,6 +129,16 @@ There are two ways to set up the development environment:
    Open your web browser and navigate to [http://localhost:4200](http://localhost:4200) to access the frontend application.
 
 
+## Required Tools
+Ensure you have the following tools installed on your machine:
+
+- Git
+- Java Development Kit (JDK) 17
+- Maven
+- Node.js and npm
+- Angular CLI
+
+
 ### Development Setup 2: Docker and Docker Compose
 
 1. **Clone the Repository**:
@@ -153,7 +163,15 @@ There are two ways to set up the development environment:
    The frontend application will communicate with the backend service internally using Docker's internal networking, 
    eliminating the need to hardcode URLs.
 
+
+## Required Tools
+Ensure you have the following tools installed on your machine:
+
+- Git
+- Docker
+- Docker Compose
    
+
 ## Testing and Expected Outputs
 
 ### Loan Request Form
