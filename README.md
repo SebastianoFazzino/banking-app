@@ -92,18 +92,19 @@ There are two ways to set up the development environment:
 ### Development Setup 1
 
 1. **Clone the Repository**:
-   ```
-   git clone https://github.com/SebastianoFazzino/banking-app.git
+   ```bash
+   git clone --depth 1 https://github.com/SebastianoFazzino/banking-app.git
    cd <repository_directory>
    ```
    
 2. Install Backend Dependencies:
-   ```
+   ```bash
    cd banking-app-backend
    mvn clean install
    ```
+   
 3. **Run the Backend Server**:
-   ```
+   ```bash
    mvn spring-boot:run
    ```
    
@@ -111,13 +112,13 @@ There are two ways to set up the development environment:
    By default, the application will be accessible at [http://localhost:8080](http://localhost:8080).
 
 4. **Install Frontend Dependencies**:
-   ```
+   ```bash
    cd banking-app-frontend
    npm install
    ```
 
 5. **Run the Development Server**:
-   ```
+   ```bash
    ng serve
    ```
 
@@ -132,7 +133,7 @@ There are two ways to set up the development environment:
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/SebastianoFazzino/banking-app.git
+    git clone --depth 1 https://github.com/SebastianoFazzino/banking-app.git
     cd <repository_directory>
     ```
 
