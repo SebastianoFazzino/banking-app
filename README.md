@@ -1,4 +1,4 @@
-# Decision Engine Loan Application
+# Loan Application Decision Engine
 
 ## Overview
 
@@ -80,26 +80,26 @@ INSERT INTO clients (personal_code, segmentation, credit_modifier) VALUES
 - Bootstrap
 - Bootstrap Icons
 
-### Usage
 
-To test the application, use the following personal codes on the frontend:
+### Different Development Setups
 
-- `49002010965` (Debt)
-- `49002010976` (Segment 1)
-- `49002010987` (Segment 2)
-- `49002010998` (Segment 3)
+There are two ways to set up the development environment:
+
+1. **Development Setup #1: Run the backend and frontend separately
+2. **Development Setup #2: Run the backend and frontend using Docker and Docker Compose
 
 
-### Development Setup
+### Development Setup 1
 
 1. **Clone the Repository**:
    ```
-   git clone <repository_url>
+   git clone https://github.com/SebastianoFazzino/banking-app.git
    cd <repository_directory>
    ```
    
 2. Install Backend Dependencies:
    ```
+   cd banking-app-backend
    mvn clean install
    ```
 3. **Run the Backend Server**:
@@ -112,6 +112,7 @@ To test the application, use the following personal codes on the frontend:
 
 4. **Install Frontend Dependencies**:
    ```
+   cd banking-app-frontend
    npm install
    ```
 
@@ -126,7 +127,68 @@ To test the application, use the following personal codes on the frontend:
 6. **Access the Application**:
    Open your web browser and navigate to [http://localhost:4200](http://localhost:4200) to access the frontend application.
 
-7. **Testing**:
-   Use predefined personal codes to simulate different scenarios and ensure that the decision engine behaves as expected.
 
+### Development Setup 2: Docker and Docker Compose
 
+1. **Clone the Repository**:
+    ```bash
+    git clone https://github.com/SebastianoFazzino/banking-app.git
+    cd <repository_directory>
+    ```
+
+2. **Build and Run with Docker Compose**:
+    ```bash
+    docker-compose up --build
+    ```
+
+   This command will build and start the Docker containers defined in the `docker-compose.yml` file.
+
+   - The `backend` service is built from the Dockerfile in the `./banking-app-backend` directory, which compiles the Spring Boot application and runs it on port 8080.
+   - The `frontend` service is built from the Dockerfile in the `./banking-app-frontend` directory, which builds the Angular application and serves it with Nginx on port 80.
+
+3. **Access the Application**:
+   Open your web browser and navigate to [http://localhost:4200](http://localhost:4200) to access the frontend application.
+
+   The frontend application will communicate with the backend service internally using Docker's internal networking, 
+   eliminating the need to hardcode URLs.
+
+   
+## Testing and Expected Outputs
+
+### Loan Request Form
+
+Navigate to [http://localhost:4200/loan-request](http://localhost:4200/loan-request) to access the loan request form.
+
+#### Possible Error Messages
+- **Missing Parameters**: Ensure all required fields are filled out.
+- **Invalid Personal Code**: Check that the personal code is valid.
+- **Invalid Amount**: Verify that the loan amount meets the constraints.
+- **Invalid Duration**: Ensure the loan duration is within the allowed range.
+
+### Loan Response
+
+After submitting a valid loan request, you will be redirected to [http://localhost:4200/loan-response](http://localhost:4200/loan-response), 
+where the loan decision engine response will be displayed. Below are the expected scenarios:
+
+#### Request Rejected
+- If the loan request is rejected, a message indicating the rejection will be displayed.
+
+#### Request Partially Accepted
+- If the loan request is partially accepted, the loan amount may be decreased, or the loan period may be increased to meet the criteria. 
+- The response will reflect these adjustments.
+
+#### Request Accepted with Larger Sum
+- If the loan request is accepted, and the client's credit score allows for a larger sum to be borrowed, the response will indicate the approved amount.
+
+#### Request Accepted with Actual Credit Score
+- If the loan request is accepted, the response will also display the client's credit score, indicating the approval decision based on their creditworthiness.
+
+To submit another loan request, click the "Submit New Request" button to return to the loan request form.
+
+### Personal Codes for Testing
+To test the application, use the following personal codes on the frontend:
+
+- `49002010965` (Debt)
+- `49002010976` (Segment 1)
+- `49002010987` (Segment 2)
+- `49002010998` (Segment 3)
