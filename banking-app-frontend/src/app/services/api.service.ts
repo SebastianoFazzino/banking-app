@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {LoanRequest} from "../models/loan-request";
 import {Observable} from "rxjs";
 import {LoanResponse} from "../models/loan-response";
-import {environment} from "../../environments.environment";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
